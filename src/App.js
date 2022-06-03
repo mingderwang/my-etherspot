@@ -1,9 +1,15 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchData } from "./helpers";
 
 function App() {
   const [address, setAddress] = useState("0x");
+  useEffect(() => {
+    const promise = fetchData();
+    promise.then((data) => {
+      setAddress(data.user);
+    });
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
