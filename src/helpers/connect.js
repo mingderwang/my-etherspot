@@ -1,10 +1,15 @@
-export async function fetchData() {
-  return new Promise((resolve, reject) => {
-    try {
-      const data = { user: "ming" };
-      resolve(data);
-    } catch (error) {
-      reject("error");
-    }
-  });
+import { Sdk, Env, MetaMaskWalletProvider } from "etherspot";
+
+// change default environment
+Env.defaultName = "testnets";
+
+export async function startSdk() {
+  if (!MetaMaskWalletProvider.detect()) {
+    console.log("MetaMask not detected");
+    return;
+  }
+
+  const walletProvider = await MetaMaskWalletProvider.connect();
+  const sdk = new Sdk(walletProvider);
+  return sdk;
 }

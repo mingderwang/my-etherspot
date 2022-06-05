@@ -1,15 +1,19 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { fetchData } from "./helpers";
-
+import { startSdk } from "./helpers";
 function App() {
   const [address, setAddress] = useState("0x");
+
   useEffect(() => {
-    const promise = fetchData();
-    promise.then((data) => {
-      setAddress(data.user);
+    startSdk().then((sdk) => {
+      if (sdk) {
+        sdk.getAccount().then((account) => {
+          setAddress(account.address);
+        });
+      }
     });
   }, []);
+
   return (
     <div className="App">
       <header className="App-header">
