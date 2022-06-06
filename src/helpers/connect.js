@@ -11,5 +11,6 @@ export async function startSdk() {
 
   const walletProvider = await MetaMaskWalletProvider.connect();
   const sdk = new Sdk(walletProvider);
+  await sdk.syncAccount();
   return sdk;
 }

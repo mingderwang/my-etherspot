@@ -2,13 +2,19 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { startSdk } from "./helpers";
 function App() {
-  const [address, setAddress] = useState("0x");
+  const [address, setAddress] = useState("testnets only");
 
   useEffect(() => {
     startSdk().then((sdk) => {
-      if (sdk) {
-        const { state } = sdk;
-        setAddress(state.state$._value.wallet.address);
+      try {
+        sdk
+          .getAccount()
+          .then((account) => {
+            setAddress(account.address);
+          })
+          .catch(console.log);
+      } catch (error) {
+        console.error(error);
       }
     });
   }, []);
