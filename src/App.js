@@ -7,9 +7,8 @@ function App() {
   useEffect(() => {
     startSdk().then((sdk) => {
       if (sdk) {
-        sdk.getAccount().then((account) => {
-          setAddress(account.address);
-        });
+        const { state } = sdk;
+        setAddress(state.state$._value.wallet.address);
       }
     });
   }, []);
